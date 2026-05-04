@@ -38,6 +38,10 @@ exit
 # or press Ctrl + D
 ```
 
+## Reference
+
+- KB Article: [SSH Passwordless Authentication Setup for ai-panther.fit.edu](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=21093) — set up SSH keys so you don't have to type your password every time
+
 ---
 
 **← Previous** [Section 1: Cluster Architecture](01-cluster-architecture.md) | **Next →** [Section 3: Linux CLI](03-linux-cli.md)

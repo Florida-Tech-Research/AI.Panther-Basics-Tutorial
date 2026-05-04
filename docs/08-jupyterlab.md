@@ -69,7 +69,7 @@ Navigate to <http://localhost:8123/lab> in your browser. On the login page, ente
 
 ## Reference
 
-- KB Article: Using JupyterLab on AI.Panther
+- KB Article: [Using JupyterLab on AI.Panther](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=20935)
 
 ---
 

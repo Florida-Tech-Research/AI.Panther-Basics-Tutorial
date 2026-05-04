@@ -19,7 +19,7 @@ module load python
 source ~/myenv/bin/activate
 ```
 
-> **Reference:** KB Article: Python Virtual Environments on AI.Panther
+> **Reference:** KB Article: [Using Python and Pip with Environment Modules](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=3282)
 
 ## 7.2 Option B — Conda (module)
 
@@ -40,7 +40,7 @@ source $(conda info --base)/etc/profile.d/conda.sh
 conda activate myenv
 ```
 
-> **Reference:** KB Article: Conda Environments on AI.Panther
+> **Reference:** KB Article: [Conda on AI.Panther](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=20934)
 
 ## 7.3 Option C — Miniforge3 (user-installed Conda)
 

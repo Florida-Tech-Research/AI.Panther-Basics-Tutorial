@@ -59,8 +59,6 @@ AI.Panther offers several partitions, each with different time limits and node c
 | `gpu2` | Infinite | 4 |
 | `h200` | Infinite | 4 |
 
-> **Reference:** KB Article: AI.Panther Partitions
-
 ## 6.3 Job scripts & directives
 
 A job script is a regular shell script (`.sh`) with Slurm directives at the top. These directives, prefixed with `#SBATCH`, tell Slurm what resources to allocate and what command to run.
@@ -147,7 +145,7 @@ cat testjob.<jobid>.out      # View the output after completion
 
 ## Reference
 
-- KB Article: Slurm Job Submission Examples
+- KB Article: [How to submit and run jobs on AI.Panther](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=2107) — covers partitions, directives, and submission examples
 
 ---
 

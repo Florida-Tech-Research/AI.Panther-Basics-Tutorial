@@ -39,9 +39,10 @@ AI.Panther is a high-performance computing (HPC) cluster at Florida Tech. It is 
 
 > **Key takeaway:** The Login Node is for **light tasks** (editing files, submitting jobs). Compute nodes handle your actual workloads. **Running heavy processes on the Login Node is prohibited.**
 
-## Reference
+## References
 
-- KB Article: AI.Panther Storage Types
+- KB Article: [What is the AI.Panther cluster?](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=2831)
+- KB Article: [AI.Panther Storage Types](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=20725)
 
 ---
 

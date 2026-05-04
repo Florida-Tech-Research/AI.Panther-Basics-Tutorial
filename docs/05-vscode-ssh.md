@@ -59,7 +59,7 @@ Click **OK**. You now have full file explorer access to your files on AI.Panther
 
 ## Reference
 
-- KB Article: Setting Up VS Code for SSH on AI.Panther
+- KB Article: [Connecting to AI Panther via VS Code](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=21094)
 
 ---
 
