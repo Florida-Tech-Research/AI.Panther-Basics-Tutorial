@@ -69,21 +69,25 @@ Open `notebooks/detection.ipynb` and work down from the top. The notebook checks
 actually got a GPU, grabs a frame from a camera, runs the model on it, and then loops so you can
 watch detections update on a live feed.
 
-It starts on the Crimson Crossing camera, which looks over Babcock Street and normally has traffic
-in shot. Two other sources are available. Twelve Florida DOT cameras sit within about ten kilometres
-of campus, mostly on I-95 and US-1, with the road and mile marker printed into the frame. Beyond
-those are roughly 900 New York City traffic cameras, much lower resolution but refreshing every
-second or two, and busy enough that there is always something to find:
+It starts on the pedestrian walkway of the Brooklyn Bridge, one of about 900 New York City traffic
+cameras. Those are only 352x240, but they give a new frame every couple of seconds, which is the
+only source fast enough for the live loop to look like video.
+
+The other two sources are worth a look but refresh slowly. The two Florida Tech cameras are
+1920x1080 and much better pictures, yet they only produce a new frame about every eighty seconds,
+and the twelve Florida DOT cameras near campus are slower still:
 
 ```python
+camera = feeds.find("Brooklyn Bridge - Ped")
 camera = feeds.find("Crimson")
 camera = feeds.CAMPUS
 camera = feeds.find("Melbourne")
-camera = feeds.find("Brooklyn Bridge - Ped")
 ```
 
-`feeds.CAMPUS` is the Olin Quad. It is the better picture, but it looks down on a mostly empty lawn
-from a long way up, so there is frequently nothing in it to detect.
+`feeds.find("Crimson")` looks over Babcock Street and usually has traffic in it. `feeds.CAMPUS` is
+the Olin Quad, which looks down on a mostly empty lawn from a long way up, so there is frequently
+nothing in it to detect. If you switch to either, raise the sleep in the live loop to about thirty
+seconds.
 
 ## 9.6 Clean up
 
