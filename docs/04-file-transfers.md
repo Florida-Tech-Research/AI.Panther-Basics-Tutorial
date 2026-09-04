@@ -1,4 +1,4 @@
-# 4. File Transfers — `rsync`, `scp`, VS Code
+# 4. File Transfers: `rsync`, `scp`, VS Code
 
 You will frequently need to move files between your local machine and AI.Panther. You can use the **VS Code GUI** (drag-and-drop), or command-line tools like **`scp`** and **`rsync`**.
 
@@ -7,12 +7,12 @@ You will frequently need to move files between your local machine and AI.Panther
 ### Using `scp` (Windows, macOS, Linux)
 
 ```powershell
-# Windows (PowerShell/CMD) — use backslashes for local paths:
+# Windows (PowerShell/CMD), use backslashes for local paths:
 scp -r .\local_folder\ username@ai-panther.fit.edu:/home1/username/
 ```
 
 ```bash
-# macOS / Linux — use forward slashes:
+# macOS / Linux, use forward slashes:
 scp -r ./local_folder/ username@ai-panther.fit.edu:/home1/username/
 ```
 

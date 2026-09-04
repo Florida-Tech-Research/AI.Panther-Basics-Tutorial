@@ -1,4 +1,4 @@
-# 6. Slurm — Job Scripts, Submitting & Monitoring Jobs
+# 6. Slurm: Job Scripts, Submitting and Monitoring Jobs
 
 **Slurm** is the job scheduler that manages access to AI.Panther's compute nodes. It controls who gets access to CPUs, GPUs, and memory, and in what order.
 
@@ -106,7 +106,7 @@ Before submitting, decide what hardware your job needs (CPU vs. GPU), how long i
 - [Python Profiler](https://docs.python.org/3/library/profile.html)
 - [NVIDIA Nsight Systems](https://developer.nvidia.com/nsight-systems)
 
-## 6.6 Try it — your first job
+## 6.6 Try it: your first job
 
 A ready-to-use copy of this script lives at [`scripts/test_job.sh`](../scripts/test_job.sh). You can copy it to the cluster, or recreate it from scratch with the steps below.
 
@@ -237,7 +237,7 @@ submit it. Your interactive shell has modules loaded; a fresh batch job does not
 
 ## Reference
 
-- KB Article: [How to submit and run jobs on AI.Panther](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=2107) — covers partitions, directives, and submission examples
+- KB Article: [How to submit and run jobs on AI.Panther](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=2107), which covers partitions, directives, and submission examples
 
 ---
 

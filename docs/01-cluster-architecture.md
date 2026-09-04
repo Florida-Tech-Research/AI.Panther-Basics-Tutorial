@@ -1,6 +1,6 @@
 # 1. Cluster Architecture & Storage Types
 
-AI.Panther is a high-performance computing (HPC) cluster at Florida Tech. It is **not a single computer** — it is a collection of interconnected nodes managed by a job scheduler.
+AI.Panther is a high-performance computing (HPC) cluster at Florida Tech. It is **not a single computer**, but a collection of interconnected nodes managed by a job scheduler.
 
 ![AI.Panther architecture overview](../images/arch.png)
 
@@ -14,9 +14,9 @@ AI.Panther is a high-performance computing (HPC) cluster at Florida Tech. It is 
 
 | Node Group | Nodes |
 |---|---|
-| GPU Nodes 09–12 (H200) | 4 nodes |
-| GPU Nodes 01–08 (A100) | 8 nodes |
-| CPU Nodes 01–16 | 16 nodes |
+| GPU Nodes 09-12 (H200) | 4 nodes |
+| GPU Nodes 01-08 (A100) | 8 nodes |
+| CPU Nodes 01-16 | 16 nodes |
 
 ## Storage & where it's mounted
 
@@ -25,7 +25,7 @@ AI.Panther is a high-performance computing (HPC) cluster at Florida Tech. It is 
 | User Home | `/home1` | NFS Mount | Login Node, all GPU nodes, all CPU nodes |
 | Project Storage | `/shared/projects` | LFS Mount (DDN Servers) | Login Node, all GPU nodes, all CPU nodes |
 | Shared Scratch | `/shared/scratch` | LFS Mount (DDN Servers) | Login Node, all GPU nodes, all CPU nodes |
-| Local Scratch | `/localscratch` | Local Mount | GPU Nodes 09–12 (H200) only |
+| Local Scratch | `/localscratch` | Local Mount | GPU Nodes 09-12 (H200) only |
 | Archive | `/archive` | NFS Mount | Login Node, CPU nodes |
 
 ## Storage details

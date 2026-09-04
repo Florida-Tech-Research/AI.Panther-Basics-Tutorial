@@ -1,8 +1,8 @@
-# 7. Virtual Environments — Python `venv` / Conda
+# 7. Virtual Environments: Python `venv` and Conda
 
 On AI.Panther, Python and Conda are provided through the **module system**. You should always work inside a virtual environment to manage your packages.
 
-## 7.1 Option A — Python `venv`
+## 7.1 Option A: Python `venv`
 
 ```bash
 module load python                            # Load Python
@@ -21,7 +21,7 @@ source ~/myenv/bin/activate
 
 > **Reference:** KB Article: [Using Python and Pip with Environment Modules](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=3282)
 
-## 7.2 Option B — Conda (module)
+## 7.2 Option B: Conda (module)
 
 ```bash
 module load anaconda3                                          # Load Conda
@@ -42,7 +42,7 @@ conda activate myenv
 
 > **Reference:** KB Article: [Conda on AI.Panther](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=20934)
 
-## 7.3 Option C — Miniforge3 (user-installed Conda)
+## 7.3 Option C: Miniforge3 (user-installed Conda)
 
 If you prefer a user-managed Conda installation:
 

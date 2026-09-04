@@ -18,7 +18,7 @@ Open a terminal (Command Prompt, PowerShell, or macOS/Linux Terminal) and run:
 ssh username@ai-panther.fit.edu
 ```
 
-> **Note:** On your first connection, you will see a message asking whether to trust the host. This is normal — type `yes` to continue.
+> **Note:** On your first connection, you will see a message asking whether to trust the host. This is normal, so type `yes` to continue.
 
 ## 2.3 Verifying your connection
 
@@ -40,7 +40,7 @@ exit
 
 ## Reference
 
-- KB Article: [SSH Passwordless Authentication Setup for ai-panther.fit.edu](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=21093) — set up SSH keys so you don't have to type your password every time
+- KB Article: [SSH Passwordless Authentication Setup for ai-panther.fit.edu](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=21093), which covers setting up SSH keys so you don't have to type your password every time
 
 ---
 

@@ -36,7 +36,7 @@ When prompted to select an SSH configuration file, choose the default option (ty
 
 The `ai-panther.fit.edu` host should now appear under **SSH** in the Remote Explorer. Expand it and click **Connect in Current Window** or **Connect in New Window** next to your username entry. If prompted for the host operating system, select **Linux**. Enter your TRACKS password when prompted.
 
-> **Note:** On your first connection, you may see a message stating that the authenticity of the host can't be established. This is normal — type `yes` and press Enter to continue.
+> **Note:** On your first connection, you may see a message stating that the authenticity of the host can't be established. This is normal, so type `yes` and press Enter to continue.
 
 ## 5.6 Open your home directory
 

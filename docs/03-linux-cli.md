@@ -1,4 +1,4 @@
-# 3. Linux CLI — Navigating Directories & File Sizes
+# 3. Linux CLI: Navigating Directories and File Sizes
 
 After logging in with SSH, you interact with AI.Panther through the Linux command line interface (CLI). Commands you type run on the login node.
 
@@ -38,9 +38,9 @@ python script_name.py
 
 You'll try this in the hands-on exercises below by writing a small script that reads the `hello.txt` file you create.
 
-> **Note:** Python is not loaded by default on AI.Panther. Run `module load python` first (see [Section 7](07-virtual-environments.md) for details on virtual environments). And remember — only run small, quick scripts on the login node. Anything heavy (training, long simulations) belongs in a Slurm job (see [Section 6](06-slurm.md)).
+> **Note:** Python is not loaded by default on AI.Panther. Run `module load python` first (see [Section 7](07-virtual-environments.md) for details on virtual environments). And remember, only run small, quick scripts on the login node. Anything heavy (training, long simulations) belongs in a Slurm job (see [Section 6](06-slurm.md)).
 
-## 3.4 Try it — explore the file system
+## 3.4 Try it: explore the file system
 
 Run each of these commands after logging in and observe the output.
 
@@ -130,7 +130,7 @@ Hello AI Panther
 
 Now write a tiny Python script that reads `hello.txt` and run it.
 
-> **Note:** As a rule, don't run real workloads on the login node — submit them as Slurm jobs (see [Section 6](06-slurm.md)). A tiny sanity check like this one is fine because it finishes in milliseconds and uses almost no resources.
+> **Note:** As a rule, don't run real workloads on the login node. Submit them as Slurm jobs (see [Section 6](06-slurm.md)). A tiny sanity check like this one is fine because it finishes in milliseconds and uses almost no resources.
 
 ```bash
 module load python                                # Load Python (skip if already loaded)
