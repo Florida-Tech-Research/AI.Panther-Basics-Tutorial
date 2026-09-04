@@ -50,6 +50,15 @@ If you have VS Code connected via Remote-SSH (see [Section 5](05-vscode-ssh.md))
 
 > **Tip:** You can also use [FileZilla](https://filezilla-project.org/) (GUI) for file transfers on any platform.
 
+## Try it later
+
+[Section 9](09-detection-demo.md) ends by writing an image to your home directory. That is a good
+excuse to come back here and pull a real file down:
+
+```bash
+scp username@ai-panther.fit.edu:/home1/username/detection.png .
+```
+
 ---
 
 **← Previous** [Section 3: Linux CLI](03-linux-cli.md) | **Next →** [Section 5: VS Code SSH Setup](05-vscode-ssh.md)

@@ -67,6 +67,13 @@ ssh -N -L 8123:node01:8123 username@ai-panther.fit.edu
 
 Navigate to <http://localhost:8123/lab> in your browser. On the login page, enter the token from the Jupyter output (all characters after `token=`).
 
+## 8.6 A worked example
+
+[Section 9](09-detection-demo.md) walks through this whole sequence again with something real at
+the end of it: a GPU session, a notebook, and a model running against a live camera feed. The
+environment for it is already built and staged on shared storage, so you can follow the same
+steps without installing anything first.
+
 ## Reference
 
 - KB Article: [Using JupyterLab on AI.Panther](https://help.fit.edu/TDClient/39/Portal/KB/ArticleDet?ID=20935)

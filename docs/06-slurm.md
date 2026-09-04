@@ -49,15 +49,26 @@ Use this to determine which partitions have GPUs, what GPU types exist, and how 
 
 AI.Panther offers several partitions, each with different time limits and node counts. Choose the partition that fits your workload:
 
-| Partition Name | Max Compute Time | Max Nodes |
-|---|---|---|
-| `short` | 45 minutes | 16 |
-| `med` | 4 hours | 16 |
-| `long` | 7 days | 16 |
-| `eternity` | Infinite | 16 |
-| `gpu1` | Infinite | 4 |
-| `gpu2` | Infinite | 4 |
-| `h200` | Infinite | 4 |
+| Partition | Max Compute Time | Nodes | Hardware |
+|---|---|---|---|
+| `short` | 45 minutes | 16 | CPU only |
+| `med` | 4 hours | 16 | CPU only |
+| `long` | 7 days | 16 | CPU only |
+| `gpu1` | 7 days | 4 | A100 40GB, 4 per node |
+| `gpu2` | 7 days | 4 | A100 40GB, 4 per node |
+| `h200` | 7 days | 2 | H200, 8 per node |
+| `h200_mig` | 7 days | 2 | H200 split into 35GB slices |
+
+The `short`, `med` and `long` partitions share the same sixteen CPU nodes; the only difference
+between them is how long a job is allowed to run. Asking for more time than a partition allows
+does not fail at submission. The job sits in the queue forever with reason `PartitionTimeLimit`,
+which is a confusing way to find out you picked the wrong one.
+
+You can always check the real limits rather than trusting a table:
+
+```bash
+sinfo -o "%P %l %D %G"
+```
 
 ## 6.3 Job scripts & directives
 
@@ -142,6 +153,87 @@ Monitor your job:
 squeue --me                  # View your job in the queue
 cat testjob.<jobid>.out      # View the output after completion
 ```
+
+## 6.7 When a job goes wrong
+
+Most of the time you spend with Slurm will be working out why a job did not do what you expected.
+It is worth seeing that happen once on purpose, in a case where the answer is known.
+
+A ready-made example lives at [`scripts/broken_job.sh`](../scripts/broken_job.sh). It is the same
+shape as the job above, but it tries to import PyTorch:
+
+```bash
+sbatch scripts/broken_job.sh
+```
+
+Once it finishes, check whether Slurm thought it worked:
+
+```bash
+sacct -j <jobid> --format=JobID,JobName,State,ExitCode,Elapsed
+```
+
+```text
+73919         BrokenJob  COMPLETED      0:0   00:00:01
+```
+
+Slurm says `COMPLETED` with exit code `0:0`. Now read the output file:
+
+```bash
+cat brokenjob.<jobid>.out
+```
+
+```text
+Starting at Fri Sep  4 16:52:35 EDT 2026
+Running on node01
+Finished at Fri Sep  4 16:52:35 EDT 2026
+```
+
+That also looks fine. The job started, ran, and finished. The actual problem is in the error file,
+which is the one people forget to open:
+
+```bash
+cat brokenjob.<jobid>.err
+```
+
+```text
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'torch'
+```
+
+Three things are worth taking from this.
+
+The first is that a job can report success and still have done nothing useful. `sacct` reports the
+exit code of the *script*, and a failing command partway through a script does not stop the rest of
+it from running. If you want a job to stop at the first error, put `set -e` near the top.
+
+The second is that `--output` and `--error` are different files, and the interesting one is usually
+`--error`. If both go to the same place you will see everything interleaved, which is sometimes
+easier.
+
+The third is the actual cause. Run this on a compute node:
+
+```bash
+which python3
+python3 --version
+```
+
+```text
+/usr/local/siemens/16.02.008-R8/STAR-CCM+16.02.008-R8/star/bin/python3
+Python 3.6.1
+```
+
+Bare `python3` on AI.Panther is the copy bundled inside STAR-CCM+, a 2017-era Python 3.6 with
+almost nothing installed in it. That is what your job used. Loading a module, or activating a
+virtual environment, puts a real Python ahead of it on your `PATH`:
+
+```bash
+module load python
+which python3
+```
+
+This is the single most common reason a job that works when you type it by hand fails when you
+submit it. Your interactive shell has modules loaded; a fresh batch job does not.
 
 ## Reference
 

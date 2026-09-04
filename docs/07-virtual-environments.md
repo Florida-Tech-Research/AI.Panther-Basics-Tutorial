@@ -59,6 +59,29 @@ conda install -c conda-forge jupyterlab       # Install packages
 - [Miniforge3 on GitHub](https://github.com/conda-forge/miniforge)
 - [Conda Documentation](https://docs.conda.io/)
 
+## 7.4 Environments in job scripts
+
+The commands above set up an environment in the shell you are sitting in. A Slurm job does not
+inherit that. It starts in a fresh shell with no modules loaded and nothing activated, which is why
+[Section 6.7](06-slurm.md) is worth reading before you submit anything real: a job that works fine
+when you type it by hand will fail on the first `import` if the job script does not set the
+environment up again.
+
+So whichever option you picked above, repeat it inside the job script:
+
+```bash
+#!/bin/bash
+#SBATCH --partition=short
+#SBATCH --time=00:10:00
+#SBATCH --output=myjob.%J.out
+#SBATCH --error=myjob.%J.err
+
+module load python
+source ~/myenv/bin/activate
+
+python my_script.py
+```
+
 ---
 
 **← Previous** [Section 6: Slurm](06-slurm.md) | **Next →** [Section 8: JupyterLab & Port Forwarding](08-jupyterlab.md)

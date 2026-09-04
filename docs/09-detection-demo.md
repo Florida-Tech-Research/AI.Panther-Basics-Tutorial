@@ -38,6 +38,20 @@ BASE=$(( 8000 + ($UID % 1000) ))
 
 Note the node name and port in the URL it prints.
 
+### Using Open OnDemand instead
+
+If you would rather not deal with SSH tunnels, this notebook also runs in the Jupyter app on
+<https://ood.fit.edu>. That Jupyter does not know about the staged environment, so register it as a
+kernel once, from the login node:
+
+```bash
+/shared/workshops/basics/venv/bin/python -m ipykernel install --user \
+    --name basics-detection --display-name "Detection (workshop)"
+```
+
+Then start a Jupyter session with a GPU, open the notebook, and pick **Detection (workshop)** from
+the kernel menu in the top right. You can skip 9.3 and 9.4 entirely if you go this route.
+
 ## 9.4 Forward the port
 
 In a **new terminal on your own machine**, open a tunnel to that node and port, as in
@@ -56,19 +70,20 @@ actually got a GPU, grabs a frame from a camera, runs the model on it, and then 
 watch detections update on a live feed.
 
 It starts on the Crimson Crossing camera, which looks over Babcock Street and normally has traffic
-in shot. Two other sources are available. `feeds.CAMPUS` is the Olin Quad, which is the better
-picture but looks down on a mostly empty lawn from a long way up, so there is often nothing in it
-to detect. Beyond campus there are about 900 New York City traffic cameras, much lower resolution
-but refreshing every second or two, and busy enough that there is always something to find:
+in shot. Two other sources are available. Twelve Florida DOT cameras sit within about ten kilometres
+of campus, mostly on I-95 and US-1, with the road and mile marker printed into the frame. Beyond
+those are roughly 900 New York City traffic cameras, much lower resolution but refreshing every
+second or two, and busy enough that there is always something to find:
 
 ```python
 camera = feeds.find("Crimson")
 camera = feeds.CAMPUS
+camera = feeds.find("Melbourne")
 camera = feeds.find("Brooklyn Bridge - Ped")
 ```
 
-The Brooklyn Bridge pedestrian walkway is worth a look, since it is full of people rather than
-traffic.
+`feeds.CAMPUS` is the Olin Quad. It is the better picture, but it looks down on a mostly empty lawn
+from a long way up, so there is frequently nothing in it to detect.
 
 ## 9.6 Clean up
 
