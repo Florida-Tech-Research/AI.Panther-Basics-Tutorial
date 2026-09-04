@@ -13,6 +13,7 @@ By the end of this tutorial you will be able to:
 - Submit and monitor jobs through Slurm
 - Set up Python virtual environments (venv / Conda)
 - Run JupyterLab on a compute node and connect from your browser
+- Run a real model on a GPU against a live camera feed
 
 ## Tutorial sections
 
@@ -26,7 +27,8 @@ By the end of this tutorial you will be able to:
 | 6 | [Slurm](docs/06-slurm.md) | Partitions, job scripts, submitting & monitoring |
 | 7 | [Virtual Environments](docs/07-virtual-environments.md) | Python `venv`, Conda module, Miniforge3 |
 | 8 | [JupyterLab & Port Forwarding](docs/08-jupyterlab.md) | Running notebooks on a compute node |
-| 9 | [Additional Resources](docs/09-resources.md) | KB articles, external links, workshop survey |
+| 9 | [Live Object Detection](docs/09-detection-demo.md) | Running a model on a live camera feed, on a GPU |
+| 10 | [Additional Resources](docs/10-resources.md) | KB articles, external links, workshop survey |
 
 ## Repository layout
 
@@ -34,6 +36,8 @@ By the end of this tutorial you will be able to:
 AI.Panther-Basics-Tutorial/
 ├── README.md            # this file
 ├── docs/                # numbered tutorial sections
+├── notebooks/           # notebooks used in the tutorial
+│   └── detection.ipynb  # live object detection (Section 9)
 ├── scripts/             # ready-to-use example scripts
 │   └── test_job.sh      # minimal Slurm job script (Section 6)
 └── images/              # diagrams and screenshots

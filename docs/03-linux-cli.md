@@ -158,6 +158,65 @@ Clean up both files:
 rm hello.txt read_hello.py
 ```
 
+## 3.5 Explore the workshop directory
+
+Everything above used files you made yourself. Real work on AI.Panther usually means reading
+data somebody else put on shared storage, so it is worth practising on a directory you did not
+create.
+
+`/shared/workshops/basics` holds the model weights and camera data used in
+[Section 9](09-detection-demo.md). It is readable by everyone and writable by nobody, which is
+what shared reference data normally looks like.
+
+```bash
+cd /shared/workshops/basics
+ls -lh
+```
+
+Now answer these using the commands from this section. Each one is a single line.
+
+**How big is each thing in here, and which is largest?**
+
+```bash
+du -sh *
+```
+
+The virtual environment dwarfs everything else, which is the usual story: code and weights are
+small, the Python environment around them is not. This is also why it lives in `/shared` rather
+than in each of your home directories, where 19 copies of it would be 19 times the size.
+
+**How many sample frames are there?**
+
+```bash
+ls data/frames | wc -l
+```
+
+`wc -l` counts lines, so piping `ls` into it counts files.
+
+**What models are available, and how big are they?**
+
+```bash
+ls -lh models/
+```
+
+**Where does your home directory stand against your quota?**
+
+```bash
+du -sh ~
+```
+
+Your home directory is capped at 100 GB. Compare that to the size of the environment you just
+measured, and it becomes clear why shared data is staged centrally rather than copied per user.
+
+**One thing you cannot do:**
+
+```bash
+touch /shared/workshops/basics/test.txt
+```
+
+This fails with `Permission denied`. You have read access to shared reference data, not write
+access. Your own work belongs in your home directory or in `/shared/scratch`.
+
 ---
 
 **← Previous** [Section 2: SSH & Connecting](02-ssh-connecting.md) | **Next →** [Section 4: File Transfers](04-file-transfers.md)

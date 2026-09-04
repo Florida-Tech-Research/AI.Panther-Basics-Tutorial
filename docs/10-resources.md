@@ -1,4 +1,4 @@
-# 9. Additional Resources
+# 10. Additional Resources
 
 ## AI.Panther KB articles
 
@@ -28,4 +28,4 @@
 
 ---
 
-**← Previous** [Section 8: JupyterLab & Port Forwarding](08-jupyterlab.md) | [↑ Back to README](../README.md)
+**← Previous** [Section 9: Live Object Detection](09-detection-demo.md) | [↑ Back to README](../README.md)

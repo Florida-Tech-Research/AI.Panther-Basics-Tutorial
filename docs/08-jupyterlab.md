@@ -73,4 +73,4 @@ Navigate to <http://localhost:8123/lab> in your browser. On the login page, ente
 
 ---
 
-**← Previous** [Section 7: Virtual Environments](07-virtual-environments.md) | **Next →** [Section 9: Additional Resources](09-resources.md)
+**← Previous** [Section 7: Virtual Environments](07-virtual-environments.md) | **Next →** [Section 9: Live Object Detection](09-detection-demo.md)
