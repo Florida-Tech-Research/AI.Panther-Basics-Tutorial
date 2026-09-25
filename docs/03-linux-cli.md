@@ -1,6 +1,6 @@
-# 3. Linux CLI: Navigating Directories and File Sizes
+# 3. Linux CLI: Navigating, File Sizes and Transfers
 
-After logging in with SSH, you interact with AI.Panther through the Linux command line interface (CLI). Commands you type run on the login node.
+In the Open OnDemand shell (**Clusters > AI.Panther Shell Access**), you interact with AI.Panther through the Linux command line interface (CLI). Commands you type run on the login node.
 
 Your prompt looks like this:
 
@@ -38,7 +38,7 @@ python script_name.py
 
 You'll try this in the hands-on exercises below by writing a small script that reads the `hello.txt` file you create.
 
-> **Note:** Python is not loaded by default on AI.Panther. Run `module load python` first (see [Section 7](07-virtual-environments.md) for details on virtual environments). And remember, only run small, quick scripts on the login node. Anything heavy (training, long simulations) belongs in a Slurm job (see [Section 6](06-slurm.md)).
+> **Note:** Python is not loaded by default on AI.Panther. Run `module load python` first (see [Section 5](05-virtual-environments.md) for details on virtual environments). And remember, only run small, quick scripts on the login node. Anything heavy (training, long simulations) belongs in a Slurm job (see [Section 4](04-slurm.md)).
 
 ## 3.4 Try it: explore the file system
 
@@ -130,7 +130,7 @@ Hello AI Panther
 
 Now write a tiny Python script that reads `hello.txt` and run it.
 
-> **Note:** As a rule, don't run real workloads on the login node. Submit them as Slurm jobs (see [Section 6](06-slurm.md)). A tiny sanity check like this one is fine because it finishes in milliseconds and uses almost no resources.
+> **Note:** As a rule, don't run real workloads on the login node. Submit them as Slurm jobs (see [Section 4](04-slurm.md)). A tiny sanity check like this one is fine because it finishes in milliseconds and uses almost no resources.
 
 ```bash
 module load python                                # Load Python (skip if already loaded)
@@ -165,7 +165,7 @@ data somebody else put on shared storage, so it is worth practising on a directo
 create.
 
 `/shared/workshops/basics` holds the model weights and camera data used in
-[Section 9](09-detection-demo.md). It is readable by everyone and writable by nobody, which is
+[Section 6](06-jupyterlab-detection.md). It is readable by everyone and writable by nobody, which is
 what shared reference data normally looks like.
 
 ```bash
@@ -181,9 +181,12 @@ Now answer these using the commands from this section. Each one is a single line
 du -sh *
 ```
 
-The virtual environment dwarfs everything else, which is the usual story: code and weights are
-small, the Python environment around them is not. This is also why it lives in `/shared` rather
-than in each of your home directories, where 19 copies of it would be 19 times the size.
+Two things dwarf the rest. `ollama` holds the container and language models used in
+[Section 7](07-containers.md), and language models are big. `venv` is the Python environment for
+[Section 6](06-jupyterlab-detection.md), and it is about two hundred times the size of the detection
+models it exists to run, which is the usual story: code and weights are small, the Python
+environment around them is not. Both live in `/shared` rather than in each of your home
+directories, where 19 copies would be 19 times the size.
 
 **How many sample frames are there?**
 
@@ -217,6 +220,65 @@ touch /shared/workshops/basics/test.txt
 This fails with `Permission denied`. You have read access to shared reference data, not write
 access. Your own work belongs in your home directory or in `/shared/scratch`.
 
+## 3.6 File transfers
+
+You will often need to move files between your own computer and AI.Panther.
+
+### In the browser
+
+For anything up to a few hundred megabytes, the Open OnDemand file browser is the easiest route.
+Open **Files > Home Directory**, go to the folder you want, and use **Upload** to send files to the
+cluster or select a file and press **Download** to bring it back. You can also drag files from your
+desktop onto the file list.
+
+### From the command line
+
+For large files, whole directories, or anything you repeat, use `scp` or `rsync` from a terminal
+**on your own computer**, not in the Open OnDemand shell. These do use SSH underneath, so off
+campus you still need the VPN.
+
+Local to cluster:
+
+```powershell
+# Windows (PowerShell/CMD), use backslashes for local paths:
+scp -r .\local_folder\ username@ai-panther.fit.edu:/home1/username/
+```
+
+```bash
+# macOS / Linux:
+scp -r ./local_folder/ username@ai-panther.fit.edu:/home1/username/
+rsync -avh local_folder/ username@ai-panther.fit.edu:/home1/username/
+```
+
+Cluster to local:
+
+```powershell
+# Windows (PowerShell/CMD):
+scp -r username@ai-panther.fit.edu:/home1/username/data/ .\data\
+```
+
+```bash
+# macOS / Linux:
+scp -r username@ai-panther.fit.edu:/home1/username/data/ ./data/
+rsync -avh username@ai-panther.fit.edu:/home1/username/data/ ./data/
+```
+
+`rsync` only copies what has changed, so re-running it after an interruption picks up where it
+left off. It is not available natively on Windows; use `scp`, the browser, or
+[cwRsync](https://itefix.net/cwrsync).
+
+> **Tip:** [FileZilla](https://filezilla-project.org/) and WinSCP give you a drag-and-drop window
+> over the same SSH connection, if you prefer a GUI for large transfers.
+
+### Try it later
+
+[Section 6](06-jupyterlab-detection.md) ends by writing an image to your home directory. That is a good
+excuse to come back here and download a real file, either from the file browser or with:
+
+```bash
+scp username@ai-panther.fit.edu:/home1/username/detection.png .
+```
+
 ---
 
-**← Previous** [Section 2: SSH & Connecting](02-ssh-connecting.md) | **Next →** [Section 4: File Transfers](04-file-transfers.md)
+**← Previous** [Section 2: Cluster Architecture & Storage](02-architecture-storage.md) | **Next →** [Section 4: Slurm](04-slurm.md)

@@ -1,0 +1,4 @@
+name: GPU check
+host: head
+script: main_job.sh
+notes: Asks for one A100, prints what it got, and runs a small matrix multiply with PyTorch from the workshop environment.
