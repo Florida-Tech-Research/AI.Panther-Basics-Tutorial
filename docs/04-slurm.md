@@ -221,8 +221,11 @@ mkdir -p ~/ondemand/data/sys/myjobs/templates
 cp -r ~/AI.Panther-Basics-Tutorial/job-templates/gpu-check ~/ondemand/data/sys/myjobs/templates/
 ```
 
-Reload the Job Composer page, then click **New Job > From Template > GPU check > Create New Job**
-and submit it. It runs a PyTorch matrix multiply on an A100.
+1. Reload the Job Composer page.
+2. Click **New Job > From Template**, select **GPU check**, and click **Create New Job**.
+3. The new job shows *Script is not valid*. Click **Job Options**, set **Script Name** to
+   `main_job.sh`, and click **Save**.
+4. Select the job and click **Submit**. It runs a PyTorch matrix multiply on an A100.
 
 To save any existing job as a template, select it and click **Create Template**.
 

@@ -1,4 +1,3 @@
 name: GPU check
 host: head
 script: main_job.sh
-notes: One A100, prints the GPU and times a PyTorch matrix multiply.
