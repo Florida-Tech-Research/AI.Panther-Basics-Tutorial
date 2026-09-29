@@ -66,7 +66,7 @@ is the usual way people run out of space or lose data. Where each one is mounted
 | Shared Scratch | `/shared/scratch` | LFS Mount (DDN Servers) | Login Node, all compute nodes |
 | Datasets | `/shared/datasets` | LFS Mount (DDN Servers) | Login Node, all compute nodes |
 | Local Scratch | `/localscratch` | Local Mount | GPU Nodes 09-12 (H200) only |
-| Archive | `/archive` | NFS Mount | Login Node, CPU nodes |
+| Archive | `/archive` | NFS Mount | Login Node only |
 
 ## 2.5 Home directory: `/home1/username`
 
@@ -98,8 +98,8 @@ shared among the members of that project, and is granted for a limited time.
 ## 2.8 Archive: `/archive`
 
 Long-term storage for data you are finished working with but need to keep, such as the raw data
-behind a published paper. It is on a separate NFS server, mounted on the login node and the CPU
-nodes, and is not meant to be read from inside a GPU job.
+behind a published paper. It is on a separate NFS server and mounted **only on the login node**,
+so jobs cannot read from it. Copy data back to project storage or scratch before a job needs it.
 
 Not every account has an archive directory:
 
