@@ -1,6 +1,6 @@
 # AI.Panther Basics Tutorial
 
-A hands-on tutorial for getting started on **AI.Panther**, Florida Tech's high-performance computing (HPC) cluster. Follow the sections in order, since each one builds on the last.
+Getting started on **AI.Panther**, Florida Tech's HPC cluster. Follow the sections in order.
 
 ## What you'll learn
 
@@ -52,6 +52,6 @@ You will need:
 - A **Florida Tech TRACKS account** (username + password) with access to AI.Panther
 - **DUO authentication** set up
 - **FortiClient VPN** if you are connecting from off-campus
-- A web browser. Everything else runs on the cluster
+- A web browser
 
-Ready? Start with **[Section 1 → Open OnDemand](docs/01-open-ondemand.md)**.
+Start with **[Section 1: Open OnDemand](docs/01-open-ondemand.md)**.

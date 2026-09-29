@@ -1,24 +1,17 @@
 # 2. Cluster Architecture & Storage
 
-AI.Panther is a high-performance computing (HPC) cluster at Florida Tech. It is **not a single
-computer**, but a collection of interconnected nodes managed by a job scheduler, sharing several
-kinds of storage.
+AI.Panther is a set of nodes managed by the Slurm scheduler, sharing several kinds of storage.
 
 ![AI.Panther architecture overview](../images/Simple%20Access%20Diagram.png)
 
 ## 2.1 How access works
 
-- **Off-campus users** connect to the VPN first, then open <https://ood.fit.edu>.
-- **On-campus users** open the site directly.
-- The Open OnDemand shell puts you on the **Login Node**. From there, **Slurm** dispatches your
-  jobs to the compute nodes.
+- Off campus: VPN first, then <https://ood.fit.edu>. On campus: open it directly.
+- The Open OnDemand shell runs on the **Login Node**. Slurm sends jobs to the compute nodes.
+- SSH to `ai-panther.fit.edu` reaches the same login node, but is not needed here.
 
-SSH to `ai-panther.fit.edu` still works and lands you on the same login node, if you already
-use it. Nothing in this tutorial requires it.
-
-> **Key takeaway:** The Login Node is for **light tasks** (editing files, submitting jobs).
-> Compute nodes handle your actual workloads. **Running heavy processes on the Login Node is
-> prohibited.**
+> **Important:** The login node is for light tasks: editing files, submitting jobs. **Running
+> heavy processes on the login node is prohibited.**
 
 ## 2.2 Compute nodes
 
@@ -28,36 +21,26 @@ use it. Nothing in this tutorial requires it.
 | GPU Nodes 01-08 | 8 | 4x A100 40GB each | GPU batch jobs |
 | GPU Nodes 09-10 | 2 | 8x H200 each | Large GPU batch jobs |
 | GPU Nodes 11-12 | 2 | H200 split into 35 GB slices | Smaller GPU batch jobs |
-| VDI Nodes vgpu01-03 | 3 | L40S split into 12 GB slices, 8 per node | Open OnDemand interactive apps |
+| VDI Nodes 01-03 | 3 | L40S split into 12 GB slices, 8 per node | Open OnDemand interactive apps |
 
-The Jupyter session you launched in [Section 1.6](01-open-ondemand.md#16-try-it-launch-your-jupyter-session-now) is running on one of the
-vgpu nodes, on one of the 24 L40S slices shared by everyone.
+Your Jupyter session from [Section 1.6](01-open-ondemand.md#16-try-it-launch-your-jupyter-session)
+runs on a VDI node.
 
-## 2.3 Try it: see the cluster for yourself
+## 2.3 Try it: look around
 
-In the Open OnDemand shell, list the partitions and how busy they are:
+In the Open OnDemand shell:
 
 ```bash
 sinfo -s
-```
-
-Each row is a partition. `NODES(A/I/O/T)` counts nodes that are allocated, idle, other (down or
-draining) and the total. The `vdi-*` rows are the vgpu nodes; the other rows map onto the table
-above. [Section 4](04-slurm.md) comes back to this.
-
-Now look at the storage described below:
-
-```bash
 ls /shared
-echo $AIP_DATASETS
 ls $AIP_DATASETS
 du -sh ~
 ```
 
-## 2.4 Storage types
+In `sinfo -s`, `NODES(A/I/O/T)` is allocated / idle / other / total. The `vdi-*` rows are the VDI
+nodes.
 
-AI.Panther has several places to put files, and they behave differently. Picking the wrong one
-is the usual way people run out of space or lose data. Where each one is mounted:
+## 2.4 Storage types
 
 | Storage | Path | Mount Type | Accessible From |
 |---|---|---|---|
@@ -70,57 +53,40 @@ is the usual way people run out of space or lose data. Where each one is mounted
 
 ## 2.5 Home directory: `/home1/username`
 
-Your home directory is where you land when you log in, and where Jupyter starts. Use it for code,
-job scripts, config files and small environments.
-
-- Persistent and backed by NFS
-- Capped at **100 GB** per user
-- Not the place for datasets, model checkpoints or large outputs
+Code, job scripts, config files, small environments. Persistent, **100 GB** per user. Not for
+datasets, checkpoints or large outputs.
 
 ## 2.6 Scratch
 
-There are two kinds of scratch space. Both are for temporary, high-churn data, and both are
-**auto-purged**, so anything you need to keep has to be copied somewhere else.
+Both kinds are temporary and **auto-purged**. Copy anything you need to keep.
 
-**Shared scratch, `/shared/scratch/username`,** is visible from every node. It suits job
-outputs, intermediate files, and caches that are too big for your home directory, such as the
-container images in [Section 7](07-containers.md).
-
-**Local scratch, `/localscratch`,** is a disk inside each H200 node (gpu09-12). It is only
-visible to jobs running on that node and is the fastest storage on the cluster. Copy data there
-at the start of a job, work on it, and copy the results back out before the job ends.
+- **Shared scratch, `/shared/scratch/username`:** visible from every node. Job outputs,
+  intermediate files, large caches.
+- **Local scratch, `/localscratch`:** a disk inside each H200 node (gpu09-12), visible only to jobs
+  on that node, and the fastest storage. Copy data in at the start of a job and results out
+  before it ends.
 
 ## 2.7 Project storage: `/shared/projects`
 
-Shared storage for a research group. A project directory has to be requested and approved, is
-shared among the members of that project, and is granted for a limited time.
+Shared storage for a research group. Requires a request and approval; time-limited.
 
 ## 2.8 Archive: `/archive`
 
-Long-term storage for data you are finished working with but need to keep, such as the raw data
-behind a published paper. It is on a separate NFS server and mounted **only on the login node**,
-so jobs cannot read from it. Copy data back to project storage or scratch before a job needs it.
+Long-term storage for finished data you need to keep. Mounted **only on the login node**, so jobs
+cannot read it.
 
-Not every account has an archive directory:
+Check whether you have a directory:
 
 ```bash
 ls -d /archive/$USER
 ```
 
-If that reports `No such file or directory`, request one through a ticket.
+If not, request one through a ticket.
 
 ## 2.9 Datasets: `/shared/datasets`
 
-Common public datasets are staged once, read-only, so that nobody has to download their own
-copy. Every shell has `$AIP_DATASETS` set to the dataset root:
-
-```bash
-echo $AIP_DATASETS
-ls $AIP_DATASETS
-```
-
-Each dataset has a `README` explaining how to read it, and a module that sets path variables for
-it:
+Read-only shared copies of common datasets. `$AIP_DATASETS` points at the root in every shell.
+Each dataset has a `README` and a module that sets path variables:
 
 ```bash
 module avail datasets
@@ -128,24 +94,22 @@ module load datasets/cifar-10
 echo $CIFAR10_DATA
 ```
 
-Use those variables in your code rather than typing `/shared/datasets/...` directly. If the tree
-ever moves, the variables follow and hard-coded paths do not.
+Use the variables rather than hard-coded `/shared/datasets/...` paths.
 
 | Dataset | Access |
 |---|---|
-| `cifar-10`, `cifar-100` | Open to everyone |
-| `culane`, `curvelanes` | Open to read; non-commercial use only, no copying off the cluster (see `TERMS.txt`) |
-| `imagenet-1k` | Gated: agree to the terms in a ticket to be added to the access group (see its `README`) |
+| `cifar-10`, `cifar-100` | Open |
+| `culane`, `curvelanes` | Open; non-commercial use only, no copying off the cluster (see `TERMS.txt`) |
+| `imagenet-1k` | Gated; agree to the terms in a ticket (see its `README`) |
 
-If a dataset you need is missing, request it through a ticket instead of downloading your own
-copy into project storage.
+Request missing datasets through a ticket.
 
 ## 2.10 Which one should I use?
 
 | You have... | Put it in |
 |---|---|
 | Code, scripts, notebooks | Home |
-| A Python environment | Home, or project storage if it is large or shared |
+| A Python environment | Home, or project storage if large or shared |
 | Output from a running job | Shared scratch, then copy what matters to project storage |
 | Data your whole group reads | Project storage |
 | A standard public dataset | Already in `/shared/datasets` |

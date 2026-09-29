@@ -1,6 +1,6 @@
 # 5. Virtual Environments: Python `venv` and Conda
 
-On AI.Panther, Python and Conda are provided through the **module system**. You should always work inside a virtual environment to manage your packages.
+Python and Conda are provided through the **module system**. Install packages into a virtual environment.
 
 ## 5.1 Option A: Python `venv`
 
@@ -44,8 +44,6 @@ conda activate myenv
 
 ## 5.3 Option C: Miniforge3 (user-installed Conda)
 
-If you prefer a user-managed Conda installation:
-
 ```bash
 curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 bash Miniforge3-$(uname)-$(uname -m).sh
@@ -61,13 +59,8 @@ conda install -c conda-forge jupyterlab       # Install packages
 
 ## 5.4 Environments in job scripts
 
-The commands above set up an environment in the shell you are sitting in. A Slurm job does not
-inherit that. It starts in a fresh shell with no modules loaded and nothing activated, which is why
-[Section 4.8](04-slurm.md#48-when-a-job-goes-wrong) is worth reading before you submit anything real: a job that works fine
-when you type it by hand will fail on the first `import` if the job script does not set the
-environment up again.
-
-So whichever option you picked above, repeat it inside the job script:
+A job starts with no modules loaded and nothing activated
+([Section 4.8](04-slurm.md#48-when-a-job-goes-wrong)). Set up the environment in the job script:
 
 ```bash
 #!/bin/bash
