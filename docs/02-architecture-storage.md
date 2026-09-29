@@ -7,8 +7,9 @@ AI.Panther is a set of nodes managed by the Slurm scheduler, sharing several kin
 ## 2.1 How access works
 
 - Off campus: VPN first, then <https://ood.fit.edu>. On campus: open it directly.
-- The Open OnDemand shell runs on the **Login Node**. Slurm sends jobs to the compute nodes.
-- SSH to `ai-panther.fit.edu` reaches the same login node, but is not needed here.
+- Open OnDemand runs on the **OOD Head**. Its shell (**Clusters > AI.Panther Shell Access**) opens
+  on the **Login Node**, the same place SSH to `ai-panther.fit.edu` reaches.
+- Slurm sends jobs from the login node to the compute nodes.
 
 > **Important:** The login node is for light tasks: editing files, submitting jobs. **Running
 > heavy processes on the login node is prohibited.**
@@ -72,8 +73,9 @@ Shared storage for a research group. Requires a request and approval; time-limit
 
 ## 2.8 Archive: `/archive`
 
-Long-term storage for finished data you need to keep. Mounted **only on the login node**, so jobs
-cannot read it.
+Long-term storage for finished data you need to keep. Mounted **only on the login node**: jobs
+cannot read it, and the Open OnDemand **Files** browser (on the OOD Head) cannot see it. Use the
+shell.
 
 Check whether you have a directory:
 
