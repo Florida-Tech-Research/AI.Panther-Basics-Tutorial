@@ -4,7 +4,7 @@ AI.Panther is a high-performance computing (HPC) cluster at Florida Tech. It is 
 computer**, but a collection of interconnected nodes managed by a job scheduler, sharing several
 kinds of storage.
 
-![AI.Panther architecture overview](../images/arch.png)
+![AI.Panther architecture overview](../images/Simple%20Access%20Diagram.png)
 
 ## 2.1 How access works
 
