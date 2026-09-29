@@ -1,6 +1,6 @@
 # 2. Cluster Architecture & Storage
 
-AI.Panther is a set of nodes managed by the Slurm scheduler, sharing several kinds of storage.
+AI.Panther is a set of nodes, managed by the Slurm scheduler, that share several kinds of storage.
 
 ![AI.Panther architecture overview](../images/Simple%20Access%20Diagram.png)
 
@@ -29,7 +29,7 @@ runs on a VDI node.
 
 ## 2.3 Try it: look around
 
-In the Open OnDemand shell:
+**Shell:**
 
 ```bash
 sinfo -s
@@ -54,30 +54,29 @@ nodes.
 
 ## 2.5 Home directory: `/home1/username`
 
-Code, job scripts, config files, small environments. Persistent, **100 GB** per user. Not for
-datasets, checkpoints or large outputs.
+Use it for code, job scripts, config files and small environments. It is persistent, with a
+**100 GB** limit per user. Do not use it for datasets, checkpoints or large outputs.
 
 ## 2.6 Scratch
 
 Both kinds are temporary and **auto-purged**. Copy anything you need to keep.
 
-- **Shared scratch, `/shared/scratch/username`:** visible from every node. Job outputs,
-  intermediate files, large caches.
-- **Local scratch, `/localscratch`:** a disk inside each H200 node (gpu09-12), visible only to jobs
-  on that node, and the fastest storage. Copy data in at the start of a job and results out
-  before it ends.
+- **Shared scratch, `/shared/scratch/username`:** visible from every node. Use it for job
+  outputs, intermediate files and large caches.
+- **Local scratch, `/localscratch`:** a disk inside each H200 node (gpu09-12). Only jobs on that
+  node can see it, and it is the fastest storage. Copy data in at the start of a job and copy
+  results out before it ends.
 
 ## 2.7 Project storage: `/shared/projects`
 
-Shared storage for a research group. Requires a request and approval; time-limited.
+Shared storage for a research group. It must be requested and approved, and it is time-limited.
 
 ## 2.8 Archive: `/archive`
 
 Long-term storage for finished data you need to keep. Mounted **only on the login node**: jobs
-cannot read it, and the Open OnDemand **Files** browser (on the OOD Head) cannot see it. Use the
-shell.
+cannot read it, and the Open OnDemand **Files** browser (on the OOD Head) cannot see it.
 
-Check whether you have a directory:
+Check whether you have a directory. **Shell:**
 
 ```bash
 ls -d /archive/$USER
@@ -88,7 +87,7 @@ If not, request one through a ticket.
 ## 2.9 Datasets: `/shared/datasets`
 
 Read-only shared copies of common datasets. `$AIP_DATASETS` points at the root in every shell.
-Each dataset has a `README` and a module that sets path variables:
+Each dataset has a `README` and a module that sets path variables. **Shell:**
 
 ```bash
 module avail datasets

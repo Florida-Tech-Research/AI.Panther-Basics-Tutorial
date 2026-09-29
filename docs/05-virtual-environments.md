@@ -1,8 +1,11 @@
 # 5. Virtual Environments: Python `venv` and Conda
 
-Python and Conda are provided through the **module system**. Install packages into a virtual environment.
+Python and Conda are provided through the **module system**. Install your packages into a virtual
+environment. Every command in this section runs in the **Shell**.
 
-## 5.1 Option A: Python `venv`
+## 5.1 Try it: Python `venv`
+
+**Shell:**
 
 ```bash
 module load python                            # Load Python
@@ -12,7 +15,9 @@ pip install jupyterlab                        # Install packages
 jupyter lab --version                         # Verify installation
 ```
 
-In your Slurm job scripts, add these lines to activate the environment:
+You will use `myenv` as a Jupyter kernel in [Section 6](06-jupyterlab-detection.md).
+
+In a Slurm job script, add these lines to activate it:
 
 ```bash
 module load python
@@ -32,7 +37,7 @@ conda install -c conda-forge jupyterlab -y                     # Install package
 jupyter lab --version                                          # Verify installation
 ```
 
-In your Slurm job scripts, add:
+In a Slurm job script, add:
 
 ```bash
 module load anaconda3
@@ -59,8 +64,9 @@ conda install -c conda-forge jupyterlab       # Install packages
 
 ## 5.4 Environments in job scripts
 
-A job starts with no modules loaded and nothing activated
-([Section 4.8](04-slurm.md#48-when-a-job-goes-wrong)). Set up the environment in the job script:
+A job starts with no modules loaded and no environment activated
+([Section 4.8](04-slurm.md#48-try-it-a-job-that-goes-wrong)), so set up the environment in the job
+script:
 
 ```bash
 #!/bin/bash

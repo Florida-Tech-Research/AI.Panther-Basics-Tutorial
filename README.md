@@ -28,6 +28,19 @@ By the end of this tutorial you will be able to:
 | 7 | [Using Containers](docs/07-containers.md) | Apptainer, NGC images, chatting with a language model |
 | 8 | [Additional Resources](docs/08-resources.md) | KB articles, external links, workshop survey |
 
+## How to read the sections
+
+- A heading that starts with **Try it** is hands-on: do it during the workshop. Other headings are
+  explained, with commands for reference.
+- Each command block says where it runs:
+
+| Label | How to open it | Runs on |
+|---|---|---|
+| **Shell** | Open OnDemand: **Clusters > AI.Panther Shell Access** | Login node |
+| **Jupyter terminal** | In your Jupyter session: **File > New > Terminal** | Your VDI GPU node |
+| **Notebook** | Open a `.ipynb` file in your Jupyter session | Your VDI GPU node |
+| **Your computer** | A terminal on your own machine | Your machine |
+
 ## Repository layout
 
 ```

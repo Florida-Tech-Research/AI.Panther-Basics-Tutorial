@@ -1,12 +1,12 @@
 # 4. Slurm
 
-**Slurm** schedules jobs onto AI.Panther's compute nodes: you submit from the login node, the job
-waits in a queue, and Slurm runs it when CPUs, GPUs and memory are free. Open OnDemand
-interactive apps are Slurm jobs too.
+**Slurm** schedules jobs onto AI.Panther's compute nodes. You submit a job from the login node, it
+waits in a queue, and Slurm runs it when CPUs, GPUs and memory are free. Open OnDemand interactive
+apps are Slurm jobs too.
+
+Every command in this section runs in the **Shell** (**Clusters > AI.Panther Shell Access**).
 
 ## 4.1 Monitoring the cluster
-
-Run these in the Open OnDemand shell:
 
 ```bash
 squeue                   # Running and queued jobs
@@ -38,8 +38,8 @@ In Open OnDemand, **Jobs > Active Jobs** lists jobs (filter *Your Jobs* / *All J
 `short`, `med` and `long` are the same 16 CPU nodes with different time limits. The `vdi-*`
 partitions are the VDI nodes used by Open OnDemand apps.
 
-A job asking for more time than its partition allows stays pending with reason
-`PartitionTimeLimit`. Check current limits with:
+A job that asks for more time than its partition allows stays pending with the reason
+`PartitionTimeLimit`. To check the current limits:
 
 ```bash
 sinfo -o "%P %l %D %G"
@@ -47,16 +47,18 @@ sinfo -o "%P %l %D %G"
 
 ## 4.3 Before you submit
 
-- **Batch job:** a script Slurm runs unattended. Most work.
-- **Interactive job:** a shell on a compute node. Testing and debugging.
+There are two kinds of job:
 
-Decide CPU or GPU, how long, and which partition. Profiling helps:
-[Python Profiler](https://docs.python.org/3/library/profile.html),
+- **Batch job:** a script that Slurm runs without you watching. Most work is done this way.
+- **Interactive job:** a shell on a compute node, for testing and debugging.
+
+Decide whether you need a CPU or GPU, how long the job will run, and which partition to use.
+Profiling helps: [Python Profiler](https://docs.python.org/3/library/profile.html),
 [NVIDIA Nsight Systems](https://developer.nvidia.com/nsight-systems).
 
-- No GPU library, no GPU: use `short`, `med` or `long`.
-- Ask for a bit more time than you expect. Jobs are killed at the limit.
-- Asking for much more than you need means a longer wait.
+- If your code does not use a GPU library, it does not need a GPU. Use `short`, `med` or `long`.
+- Ask for a bit more time than you expect. Slurm kills a job when it reaches its time limit.
+- The more you ask for, the longer you wait in the queue.
 
 ## 4.4 Job scripts & directives
 
@@ -77,11 +79,11 @@ A job script is a shell script with `#SBATCH` directives at the top.
 
 > **Important:** Unless your code uses MPI or DDP, set `--ntasks` to `1`.
 
-`%J` is the job ID and `%x` the job name.
+In file names, `%J` is replaced by the job ID and `%x` by the job name.
 
 ## 4.5 Try it: your first batch job
 
-[`scripts/test_job.sh`](../scripts/test_job.sh):
+This is [`scripts/test_job.sh`](../scripts/test_job.sh):
 
 ```bash
 #!/bin/bash
@@ -106,9 +108,13 @@ echo "Current working directory is $(pwd)"
 sleep 60
 ```
 
+Submit it, watch it in the queue, and read the output when it finishes. **Shell:**
+
 ```bash
 cd ~/AI.Panther-Basics-Tutorial
 sbatch scripts/test_job.sh
+squeue --me
+cat testjob.<jobid>.out
 ```
 
 Output files are written to the directory you submitted from.
@@ -122,17 +128,15 @@ scancel --me                 # Cancel all of your jobs
 sacct -j <jobid>             # State and exit code, including finished jobs
 ```
 
-In `squeue`, `ST` is the state: `PD` pending, `R` running, `CG` completing. Pending jobs show a
-reason such as `Resources` or `Priority`. Finished jobs leave `squeue`; use `sacct`.
+In `squeue`, the `ST` column is the state: `PD` pending, `R` running, `CG` completing. Pending jobs
+show a reason such as `Resources` or `Priority`. Finished jobs drop out of `squeue`; use `sacct`
+for those.
 
-```bash
-squeue --me
-cat testjob.<jobid>.out
-```
+**Jobs > Active Jobs** in Open OnDemand shows the same list, with a delete button to cancel a job.
 
-**Jobs > Active Jobs** in Open OnDemand shows the same list, with a delete button to cancel.
+## 4.7 Try it: an interactive job
 
-## 4.7 Accessing compute nodes interactively
+**Shell:**
 
 ```bash
 srun -p short --ntasks=1 --cpus-per-task=2 --mem=4G --time=00:30:00 --pty bash -i
@@ -141,8 +145,8 @@ nproc
 exit
 ```
 
-The prompt changes to the compute node's name. `exit` or closing the tab ends the job. Long work
-belongs in a batch job.
+After `srun`, the prompt changes to the compute node's name, and `hostname` and `nproc` run on
+that node. `exit`, or closing the tab, ends the job. Long work belongs in a batch job.
 
 With a GPU:
 
@@ -152,9 +156,9 @@ nvidia-smi
 exit
 ```
 
-## 4.8 When a job goes wrong
+## 4.8 Try it: a job that goes wrong
 
-[`scripts/broken_job.sh`](../scripts/broken_job.sh) tries to import PyTorch:
+[`scripts/broken_job.sh`](../scripts/broken_job.sh) tries to import PyTorch. **Shell:**
 
 ```bash
 sbatch scripts/broken_job.sh
@@ -165,7 +169,7 @@ sacct -j <jobid> --format=JobID,JobName,State,ExitCode,Elapsed
 73919         BrokenJob  COMPLETED      0:0   00:00:01
 ```
 
-The `.out` file looks fine too. The error is in the `.err` file:
+Slurm reports success, and the `.out` file looks fine too. The error is in the `.err` file:
 
 ```bash
 cat brokenjob.<jobid>.err
@@ -177,11 +181,11 @@ Traceback (most recent call last):
 ModuleNotFoundError: No module named 'torch'
 ```
 
-- `sacct` reports the exit code of the script, not of each command. Add `set -e` to stop at the
-  first error.
-- Check the `.err` file.
-- A batch job starts with no modules loaded. In an interactive job
-  ([Section 4.7](#47-accessing-compute-nodes-interactively)), compare:
+- `sacct` reports the exit code of the whole script, not of each command. Add `set -e` near the
+  top of a script to make it stop at the first error.
+- Always check the `.err` file.
+- A batch job starts with no modules loaded. Compare these in an interactive job
+  ([Section 4.7](#47-try-it-an-interactive-job)):
 
 ```bash
 which python3
@@ -189,41 +193,42 @@ module load python
 which python3
 ```
 
-Bare `python3` is the copy bundled with STAR-CCM+ (Python 3.6, no torch). Load a module or
+Bare `python3` is the copy bundled with STAR-CCM+ (Python 3.6, without torch). Load a module or
 activate your environment in the job script.
 
-## 4.9 Job Composer and templates
+## 4.9 Try it: Job Composer
 
 **Jobs > Job Composer** creates, edits and submits batch jobs in the browser. Each job gets its own
 directory with a `main_job.sh`.
 
-### Try it
-
-1. **New Job > From Default Template**.
-2. Under **Submit Script**, **Open Editor**. Change the partition to `#SBATCH --partition=short`
-   and save.
+1. Click **New Job > From Default Template**.
+2. Under **Submit Script**, click **Open Editor**. Change the partition line to
+   `#SBATCH --partition=short` and save.
 3. Select the job and click **Submit**.
 4. Open the `.out` file under **Folder Contents**.
 
-**Stop** cancels a job; **Delete** removes it and its directory.
+**Stop** cancels a job; **Delete** removes the job and its directory.
 
-### Templates
+## 4.10 Try it: Job Composer templates
 
-A template is a job script plus a `manifest.yml`. **New Job > From Template** makes a fresh copy.
-Your own templates live in `~/ondemand/data/sys/myjobs/templates`. Install the GPU check template
-from this repo:
+A template is a job script plus a `manifest.yml`. **New Job > From Template** makes a fresh copy of
+one. Your own templates live in `~/ondemand/data/sys/myjobs/templates`.
+
+Install the GPU check template from this repo. **Shell:**
 
 ```bash
 mkdir -p ~/ondemand/data/sys/myjobs/templates
 cp -r ~/AI.Panther-Basics-Tutorial/job-templates/gpu-check ~/ondemand/data/sys/myjobs/templates/
 ```
 
-Reload the page, then **New Job > From Template > GPU check > Create New Job**, and submit. It
-runs a PyTorch matrix multiply on an A100.
+Reload the Job Composer page, then click **New Job > From Template > GPU check > Create New Job**
+and submit it. It runs a PyTorch matrix multiply on an A100.
 
 To save any existing job as a template, select it and click **Create Template**.
 
-## 4.10 Your Jupyter session is a Slurm job
+## 4.11 Try it: find your Jupyter session
+
+**Shell:**
 
 ```bash
 squeue --me
@@ -231,8 +236,8 @@ squeue --me
 
 The job on `vdi-med` is the Jupyter session from
 [Section 1.6](01-open-ondemand.md#16-try-it-launch-your-jupyter-session). Open OnDemand turned the
-form into `#SBATCH` directives and submitted it. `scancel` on its ID ends the session, the same as
-**Delete**.
+form into `#SBATCH` directives and submitted it. Running `scancel` on its job ID ends the session,
+the same as **Delete**.
 
 ## Reference
 

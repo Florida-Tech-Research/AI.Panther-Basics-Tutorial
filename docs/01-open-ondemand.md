@@ -1,9 +1,9 @@
 # 1. Open OnDemand
 
-Open OnDemand is AI.Panther's web portal: a shell, a file browser, job tools and interactive apps
-such as Jupyter, all in the browser.
+Open OnDemand is AI.Panther's web portal. It gives you a shell, a file browser, job tools and
+interactive apps such as Jupyter, all in the browser.
 
-## 1.1 Logging in
+## 1.1 Try it: log in
 
 Go to <https://ood.fit.edu> and sign in with your TRACKS username, password and DUO.
 
@@ -13,26 +13,26 @@ Go to <https://ood.fit.edu> and sign in with your TRACKS username, password and 
 
 | Menu | What it does |
 |---|---|
-| **Files** | Browse, upload, download, edit, rename, delete |
+| **Files** | Browse, upload, download, edit, rename and delete files |
 | **Jobs** | **Active Jobs** lists running and queued jobs; **Job Composer** writes and submits job scripts |
 | **Clusters** | **AI.Panther Shell Access** opens a terminal on the login node |
 | **Interactive Apps** | Jupyter, Code Server (VS Code), Desktop, MATLAB and others |
 | **My Interactive Sessions** | Connect to or delete your running apps |
 
+In this tutorial, **Shell** means **Clusters > AI.Panther Shell Access**.
+
 ## 1.3 Try it: open a shell
 
-Open **Clusters > AI.Panther Shell Access** and run:
+**Shell:**
 
 ```bash
 hostname
 whoami
-```
-
-Clone this tutorial into your home directory:
-
-```bash
 git clone https://github.com/Florida-Tech-Research/AI.Panther-Basics-Tutorial.git
 ```
+
+`hostname` prints `ai-panther.fit.edu`, the login node. `git clone` copies this tutorial into
+your home directory.
 
 ## 1.4 Try it: the file browser
 
@@ -42,17 +42,17 @@ Open **Files > Home Directory**, go into `AI.Panther-Basics-Tutorial/scripts`, a
 
 ## 1.5 Interactive apps
 
-Each app has a form for hardware and time. **Launch** submits a Slurm job; the session shows as
+Each app has a form for hardware and time. **Launch** submits a Slurm job. The session shows as
 *Queued*, then *Running* with a **Connect** button.
 
-Interactive apps run on the vgpu nodes (`vdi-*` partitions). One GPU is a 12 GB slice of an L40S.
+Interactive apps run on the VDI nodes (`vdi-*` partitions). One GPU is a 12 GB slice of an L40S.
 
 > **Important:** A session holds its GPU until you **Delete** it or its time runs out. Closing
 > the tab does not free it.
 
 ## 1.6 Try it: launch your Jupyter session
 
-You will use this session in Sections 6 and 7. Open **Interactive Apps > Jupyter**:
+You will use this session in Sections 6 and 7. Open **Interactive Apps > Jupyter** and fill in:
 
 | Field | Value |
 |---|---|
@@ -64,9 +64,9 @@ You will use this session in Sections 6 and 7. Open **Interactive Apps > Jupyter
 | Modules to load | leave blank |
 | Working Directory | leave blank |
 
-Click **Launch**. No need to connect yet.
+Click **Launch**. You do not need to connect yet.
 
-`vdi-short` has a 1-hour limit, too short for the workshop.
+`vdi-short` has a 1-hour limit, which is too short for the workshop.
 
 ## Troubleshooting
 

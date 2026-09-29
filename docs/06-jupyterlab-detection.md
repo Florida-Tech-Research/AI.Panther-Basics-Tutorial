@@ -3,10 +3,18 @@
 JupyterLab runs notebooks, terminals and a file browser in the browser. Open OnDemand starts it on
 a VDI node with a GPU.
 
-## 6.1 Register your environment as a kernel
+This section uses three places to run things:
 
-Jupyter runs code in a **kernel**, a Python environment. Register yours once, in the Open
-OnDemand shell:
+| Where | How to open it | Runs on |
+|---|---|---|
+| **Shell** | **Clusters > AI.Panther Shell Access** | Login node |
+| **Jupyter terminal** | In JupyterLab, **File > New > Terminal** | Your VDI GPU node |
+| **Notebook** | Open a `.ipynb` file in JupyterLab | Your VDI GPU node |
+
+## 6.1 Try it: register your environment as a kernel
+
+Jupyter runs code in a **kernel**, which is a Python environment. Register `myenv` from
+[Section 5.1](05-virtual-environments.md#51-try-it-python-venv) once. **Shell:**
 
 ```bash
 module load python
@@ -19,9 +27,9 @@ For Conda, use `conda install -c conda-forge ipykernel` instead of `pip`.
 
 **Python (myenv)** then appears in Jupyter, including in a running session after a page reload.
 
-## 6.2 Connect to your session
+## 6.2 Try it: connect to your session
 
-**My Interactive Sessions > Connect to Jupyter** on the session from
+Open **My Interactive Sessions** and click **Connect to Jupyter** on the session from
 [Section 1.6](01-open-ondemand.md#16-try-it-launch-your-jupyter-session). If it has ended, launch a
 new one with the same settings.
 
@@ -29,27 +37,32 @@ new one with the same settings.
 
 - The **file browser** on the left starts in your home directory.
 - The **Launcher** creates notebooks (one button per kernel) and terminals.
-- **File > New > Terminal** opens a shell on the compute node.
-- The kernel name in the **top right** of a notebook switches kernels.
+- **File > New > Terminal** opens a **Jupyter terminal** on your GPU node, not the login node.
+- The kernel name in the **top right** of a notebook shows the current kernel. Click it to switch.
 
-## 6.4 Try it
+## 6.4 Try it: terminal and notebook
 
-1. In a terminal, run `nvidia-smi`. You should see one `NVIDIA L40S-12Q` with 12 GB.
-2. Start a notebook with the **Python 3** kernel and run:
+1. **Jupyter terminal:** run `nvidia-smi`. You should see one `NVIDIA L40S-12Q` with 12 GB.
+2. **Notebook:** in the Launcher, start a notebook with the **Python 3** kernel and run:
 
    ```python
    import sys, socket
    print(socket.gethostname(), sys.executable)
    ```
 
-3. Switch to **Python (myenv)** and run it again. The Python path changes.
+3. Switch the kernel to **Python (myenv)** and run the cell again. The Python path changes to the
+   one inside `myenv`.
 
 ## 6.5 Try it: live object detection
 
-Open `AI.Panther-Basics-Tutorial/notebooks/detection.ipynb` and run the cells in order. If Jupyter
-asks for a kernel, choose **Python 3**. The first cell registers the **Detection (workshop)**
-kernel and tells you to switch to it. The rest checks the GPU, grabs a camera frame, runs YOLO,
-and loops on a live feed.
+**Notebook:** open `AI.Panther-Basics-Tutorial/notebooks/detection.ipynb` and run the cells in
+order.
+
+- If Jupyter asks you to select a kernel, choose **Python 3**.
+- The first cell registers the **Detection (workshop)** kernel and tells you to switch to it with
+  **Kernel > Change Kernel...**. Run it again after switching; it prints `Ready`.
+- The rest of the notebook checks the GPU, grabs a camera frame, runs YOLO, and then loops on a
+  live feed.
 
 | Camera | Resolution | New frame every |
 |---|---|---|
