@@ -19,29 +19,20 @@ For Conda, use `conda install -c conda-forge ipykernel` instead of `pip`.
 
 **Python (myenv)** then appears in Jupyter, including in a running session after a page reload.
 
-## 6.2 Register the workshop kernel
-
-The detection notebook uses the environment in `/shared/workshops/basics`:
-
-```bash
-/shared/workshops/basics/venv/bin/python -m ipykernel install --user \
-    --name basics-detection --display-name "Detection (workshop)"
-```
-
-## 6.3 Connect to your session
+## 6.2 Connect to your session
 
 **My Interactive Sessions > Connect to Jupyter** on the session from
 [Section 1.6](01-open-ondemand.md#16-try-it-launch-your-jupyter-session). If it has ended, launch a
 new one with the same settings.
 
-## 6.4 JupyterLab basics
+## 6.3 JupyterLab basics
 
 - The **file browser** on the left starts in your home directory.
 - The **Launcher** creates notebooks (one button per kernel) and terminals.
 - **File > New > Terminal** opens a shell on the compute node.
 - The kernel name in the **top right** of a notebook switches kernels.
 
-## 6.5 Try it
+## 6.4 Try it
 
 1. In a terminal, run `nvidia-smi`. You should see one `NVIDIA L40S-12Q` with 12 GB.
 2. Start a notebook with the **Python 3** kernel and run:
@@ -53,11 +44,12 @@ new one with the same settings.
 
 3. Switch to **Python (myenv)** and run it again. The Python path changes.
 
-## 6.6 Try it: live object detection
+## 6.5 Try it: live object detection
 
-Open `AI.Panther-Basics-Tutorial/notebooks/detection.ipynb`, select the **Detection (workshop)**
-kernel, and run the cells in order. It checks the GPU, grabs a camera frame, runs YOLO, and loops
-on a live feed.
+Open `AI.Panther-Basics-Tutorial/notebooks/detection.ipynb` and run the cells in order. If Jupyter
+asks for a kernel, choose **Python 3**. The first cell registers the **Detection (workshop)**
+kernel and tells you to switch to it. The rest checks the GPU, grabs a camera frame, runs YOLO,
+and loops on a live feed.
 
 | Camera | Resolution | New frame every |
 |---|---|---|

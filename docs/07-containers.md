@@ -54,27 +54,29 @@ apptainer pull ollama.sif docker://ollama/ollama:latest
 | `llama3.2:3b` | 2.0 GB | Fast |
 | `qwen2.5:7b` | 4.7 GB | Slower, usually better answers |
 
-Start the server in the background:
+Open [`notebooks/chat.ipynb`](../notebooks/chat.ipynb) and run the cells in order. It sets up the
+kernel, starts the Ollama container, chats with it, compares the two models, and stops the server
+at the end.
+
+## 7.5 Optional: the same from a terminal
+
+In a Jupyter terminal (**File > New > Terminal**):
 
 ```bash
 module load apptainer
 OLLAMA=/shared/workshops/basics/ollama
-PORT=$(( 11000 + UID % 1000 ))
+PORT=$(( 11000 + $(id -u) % 1000 ))
 
 apptainer exec --nv \
     --bind $OLLAMA/models:/models:ro \
     --env OLLAMA_MODELS=/models,OLLAMA_HOST=127.0.0.1:$PORT,OLLAMA_NOPRUNE=1 \
     $OLLAMA/ollama.sif ollama serve > ~/ollama.log 2>&1 &
-```
 
-Chat with it:
-
-```bash
 apptainer exec --env OLLAMA_HOST=127.0.0.1:$PORT $OLLAMA/ollama.sif ollama run llama3.2:3b
 ```
 
-The first reply can take up to 30 seconds while the model loads. `/bye` leaves the chat; the server
-keeps running.
+`/bye` leaves the chat; the server keeps running. The notebook and the terminal use the same port,
+so either can reuse a server the other started.
 
 | Part | Why |
 |---|---|
@@ -88,20 +90,15 @@ keeps running.
 Use `--env` rather than `export`: the image sets its own `OLLAMA_HOST`, which overrides your
 shell's.
 
-In a second terminal, `nvidia-smi` shows the model in GPU memory.
+Stop the server:
 
-## 7.5 Try it: chat from a notebook
-
-Open [`notebooks/chat.ipynb`](../notebooks/chat.ipynb) with the **Detection (workshop)** kernel and
-run the cells. It streams replies, keeps a conversation, and compares the two models.
+```bash
+pkill -u $(id -un) -f "ollama serve"
+```
 
 ## 7.6 Clean up
 
-```bash
-pkill -u $USER -f "ollama serve"
-```
-
-Then **Delete** the Jupyter session in **My Interactive Sessions**.
+**Delete** the Jupyter session in **My Interactive Sessions**.
 
 ## Containers in batch jobs
 
