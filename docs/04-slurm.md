@@ -193,7 +193,7 @@ module load python
 which python3
 ```
 
-Bare `python3` is the copy bundled with STAR-CCM+ (Python 3.6, without torch). Load a module or
+Bare `python3` is not your environment's Python and does not have torch. Load a module or
 activate your environment in the job script.
 
 ## 4.9 Try it: Job Composer
